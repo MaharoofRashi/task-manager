@@ -15,7 +15,7 @@ func AddTask(task models.Task) {
 	tasks = append(tasks, task)
 }
 
-func FindTaskByID(id int) (models.Task, error) {
+func FindTaskByID(id string) (models.Task, error) {
 	for _, task := range tasks {
 		if task.ID == id {
 			return task, nil
@@ -24,7 +24,7 @@ func FindTaskByID(id int) (models.Task, error) {
 	return models.Task{}, errors.New("task not found")
 }
 
-func UpdateTask(id int, updatedTask models.Task) (models.Task, error) {
+func UpdateTask(id string, updatedTask models.Task) (models.Task, error) {
 	for i, task := range tasks {
 		if task.ID == id {
 			updatedTask.ID = id
@@ -35,7 +35,7 @@ func UpdateTask(id int, updatedTask models.Task) (models.Task, error) {
 	return models.Task{}, errors.New("task not found")
 }
 
-func DeleteTask(id int) error {
+func DeleteTask(id string) error {
 	for i, task := range tasks {
 		if task.ID == id {
 			tasks = append(tasks[:i], tasks[i+1:]...)

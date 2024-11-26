@@ -11,19 +11,19 @@ func GetAllTasks() []models.Task {
 }
 
 func CreateTask(task models.Task) models.Task {
-	task.ID = int(uuid.New().ID())
+	task.ID = uuid.New().String()
 	storage.AddTask(task)
 	return task
 }
 
-func GetTaskByID(id int) (models.Task, error) {
+func GetTaskByID(id string) (models.Task, error) {
 	return storage.FindTaskByID(id)
 }
 
-func UpdateTask(id int, updatedTask models.Task) (models.Task, error) {
+func UpdateTask(id string, updatedTask models.Task) (models.Task, error) {
 	return storage.UpdateTask(id, updatedTask)
 }
 
-func DeleteTask(id int) error {
+func DeleteTask(id string) error {
 	return storage.DeleteTask(id)
 }
