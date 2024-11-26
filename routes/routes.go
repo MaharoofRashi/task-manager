@@ -11,7 +11,7 @@ func RegisterRoutes(r *gin.Engine) {
 		taskRoutes.GET("", handlers.GetTasks)
 		taskRoutes.POST("", handlers.CreateTask)
 		taskRoutes.GET("/:id", handlers.GetTaskByID)
-		taskRoutes.PUT("/:id", handlers.DeleteTask)
+		taskRoutes.PUT("/:id", handlers.UpdateTask)
 		taskRoutes.DELETE("/:id", handlers.DeleteTask)
 	}
 }
