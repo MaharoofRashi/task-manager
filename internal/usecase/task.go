@@ -3,6 +3,7 @@ package usecase
 import (
 	"github.com/MaharoofRashi/task-manager/internal/core"
 	"github.com/MaharoofRashi/task-manager/internal/repository"
+	"github.com/google/uuid"
 )
 
 type TaskUsecase struct {
@@ -21,6 +22,7 @@ func (uc *TaskUsecase) CreateTask(task core.Task) (core.Task, error) {
 	if err := task.Validate(); err != nil {
 		return core.Task{}, err
 	}
+	task.ID = uuid.New().String()
 	return uc.repo.Create(task)
 }
 
