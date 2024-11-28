@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/MaharoofRashi/task-manager/config"
-	"github.com/MaharoofRashi/task-manager/routes"
+	"github.com/MaharoofRashi/task-manager/internal/di"
+	"github.com/MaharoofRashi/task-manager/internal/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	config.LoadConfig()
 	r := gin.Default()
-	routes.RegisterRoutes(r)
+	taskHandler := di.BuildTaskHandler()
+	api := r.Group("/api/v1")
+	routes.RegisterTaskRoutes(api.Group("/tasks"), taskHandler)
+
 	r.Run(":8080")
 }
