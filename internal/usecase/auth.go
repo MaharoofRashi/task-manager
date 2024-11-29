@@ -4,15 +4,20 @@ import (
 	"errors"
 	"github.com/MaharoofRashi/task-manager/internal/core"
 	"github.com/MaharoofRashi/task-manager/internal/repository"
+	"github.com/MaharoofRashi/task-manager/pkg/utils"
 	"github.com/google/uuid"
 )
 
 type AuthUsecase struct {
 	userRepo repository.UserRepository
+	jwtUtil  *utils.JWTUtil
 }
 
-func NewAuthUsecase(userRepo repository.UserRepository) *AuthUsecase {
-	return &AuthUsecase{userRepo: userRepo}
+func NewAuthUsecase(userRepo repository.UserRepository, jwtUtil *utils.JWTUtil) *AuthUsecase {
+	return &AuthUsecase{
+		userRepo: userRepo,
+		jwtUtil:  jwtUtil,
+	}
 }
 
 func (uc *AuthUsecase) Signup(user core.User) (core.User, error) {
@@ -31,5 +36,5 @@ func (uc *AuthUsecase) Login(username, password string) (string, error) {
 	if err := user.CheckPassword(password); err != nil {
 		return "", errors.New("invalid username or password")
 	}
-	return utils.GenerateToken(user.ID)
+	return uc.jwtUtil.GenerateToken(user.ID)
 }
