@@ -28,7 +28,7 @@ func (repo *InMemoryUserRepo) Create(user core.User) (core.User, error) {
 
 func (repo *InMemoryUserRepo) FindByUsername(username string) (core.User, error) {
 	repo.mu.Lock()
-	defer repo.mu.Lock()
+	defer repo.mu.Unlock()
 
 	user, exists := repo.users[username]
 	if !exists {
