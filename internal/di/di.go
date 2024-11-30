@@ -23,9 +23,9 @@ func BuildAuthHandler() *handlers.AuthHandler {
 	jwtUtil := utils.NewJWTUtil(cfg.JWTSecret)
 
 	userRepo := storage.NewInMemoryUserRepo()
-	authUsercase := usecase2.NewAuthUsecase(userRepo, jwtUtil)
+	authUsecase := usecase2.NewAuthUsecase(userRepo, jwtUtil)
 
-	return handlers.NewAuthHandler(authUsercase, jwtUtil)
+	return handlers.NewAuthHandler(authUsecase, jwtUtil)
 }
 
 func BuildAuthMiddleware(config *config.Config) gin.HandlerFunc {
