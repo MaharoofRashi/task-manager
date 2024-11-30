@@ -6,7 +6,9 @@ import (
 	"github.com/MaharoofRashi/task-manager/internal/repository"
 	"github.com/MaharoofRashi/task-manager/internal/storage"
 	usecase2 "github.com/MaharoofRashi/task-manager/internal/usecase"
+	"github.com/MaharoofRashi/task-manager/middleware"
 	"github.com/MaharoofRashi/task-manager/pkg/utils"
+	"github.com/gin-gonic/gin"
 )
 
 func BuildTaskHandler() *handlers.TaskHandler {
@@ -24,4 +26,9 @@ func BuildAuthHandler() *handlers.AuthHandler {
 	authUsercase := usecase2.NewAuthUsecase(userRepo, jwtUtil)
 
 	return handlers.NewAuthHandler(authUsercase, jwtUtil)
+}
+
+func BuildAuthMiddleware(config *config.Config) gin.HandlerFunc {
+	jwtUtil := utils.NewJWTUtil(config.JWTSecret)
+	return middleware.JWTMiddleware(jwtUtil)
 }
